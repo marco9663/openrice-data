@@ -17,7 +17,6 @@ export interface OpenRiceRestaurant {
 }
 export const parseOpenRiceRestaurantHTML = (rawHTML: string) => {
   const root = parse(rawHTML);
-  console.log(root);
   const nameZh = root.querySelector('span.name')?.text;
   const nameEn = root.querySelector('div.smaller-font-name')?.text.trim();
   const addressZh = root.querySelector('a[data-href=#map]')?.text.trim();
@@ -34,6 +33,7 @@ export const parseOpenRiceRestaurantHTML = (rawHTML: string) => {
       const parsedOpen: string[] = op.text
         .trim()
         .replaceAll('\t', '')
+        .replaceAll('\r', '')
         .split('\n')
         .filter((v) => v);
       return {
