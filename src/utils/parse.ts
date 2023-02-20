@@ -35,7 +35,7 @@ export const parseOpenRiceRestaurantHTML = (rawHTML: string) => {
         .replaceAll('\t', '')
         .replaceAll('\r', '')
         .split('\n')
-        .filter((v) => v.trim());
+        .filter((v) => v.trim()).map(v=>v.trim());
       return {
         day: parsedOpen[0],
         period: parsedOpen.slice(1),
