@@ -1,4 +1,4 @@
-import { OpenRiceRestaurant } from '../../src/utils';
+import { OpenRiceRestaurant } from '../../src';
 
 export const openRiceRestaurant_r525476 = {
   nameZh: '秘 (享成街)',
@@ -9,18 +9,18 @@ export const openRiceRestaurant_r525476 = {
   smile: 345,
   ok: 77,
   cry: 16,
-  open: [
+  openingHours: [
     {
-      day: '星期一至日',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '星期一至日',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
     {
-      day: '公眾假期',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '公眾假期',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
     {
-      day: '公眾假期前夕',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '公眾假期前夕',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
   ],
   categories: ['日本菜', '烤肉'],
