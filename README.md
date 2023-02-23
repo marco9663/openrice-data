@@ -17,9 +17,9 @@ This package helps parse openrice html page to json format. It is intented to pa
 - smile: `number`
 - ok: `number`
 - cry: `number`
-- open: {
-day: `string`
-period: `string[]`
+- openingHours: {
+date: `string`
+time: `string[]`
 } []
 - categories: `string[]`
 
@@ -34,18 +34,18 @@ example
   smile: 345,
   ok: 77,
   cry: 16,
-  open: [
+  openingHours: [
     {
-      day: '星期一至日',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '星期一至日',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
     {
-      day: '公眾假期',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '公眾假期',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
     {
-      day: '公眾假期前夕',
-      period: ['12:00 - 15:00', '17:30 - 22:00'],
+      date: '公眾假期前夕',
+      time: ['12:00 - 15:00', '17:30 - 22:00'],
     },
   ],
   categories: ['日本菜', '烤肉'],
