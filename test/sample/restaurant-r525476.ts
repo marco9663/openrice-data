@@ -24,4 +24,6 @@ export const openRiceRestaurant_r525476 = {
     },
   ],
   categories: ['日本菜', '烤肉'],
+  photoUrl:
+    'https://static5.orstatic.com/userphoto2/photo/1B/1185/07CQ1O8CD07A7D3DDF964Alv.jpg',
 } satisfies OpenRiceRestaurant;

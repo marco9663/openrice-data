@@ -1,5 +1,5 @@
-import { parse } from 'node-html-parser';
 import { DOMNotFoundError } from '../error';
+import { parse } from 'node-html-parser';
 
 export interface OpenRiceRestaurant {
   nameZh: string;
@@ -15,6 +15,7 @@ export interface OpenRiceRestaurant {
     time: string[];
   }[];
   categories: string[];
+  photoUrl: string | null;
 }
 export const parseOpenRiceRestaurantHTML = (
   rawHTML: string
@@ -71,6 +72,23 @@ export const parseOpenRiceRestaurantHTML = (
   const categories = root
     .querySelectorAll('.header-poi-categories a')
     .map((v) => v.text);
+
+  const photoElement = root.querySelector('.photo');
+  let photoUrl: string | null = null;
+  if (
+    !photoElement ||
+    !photoElement.getAttribute('style') ||
+    !photoElement!.getAttribute('style')!.match(/url\((.*)\)/) ||
+    !Array.isArray(photoElement!.getAttribute('style')!.match(/url\((.*)\)/)) ||
+    photoElement!.getAttribute('style')!.match(/url\((.*)\)/)!.length < 2
+  ) {
+  } else {
+    photoUrl = photoElement!
+      .getAttribute('style')!
+      .match(/url\((.*)\)/)![1]
+      .replaceAll('"', '');
+  }
+
   return {
     nameZh: nameZh,
     nameEn: nameEn,
@@ -82,5 +100,33 @@ export const parseOpenRiceRestaurantHTML = (
     cry,
     openingHours,
     categories,
+    photoUrl,
   };
+};
+
+const extractLatLong = (
+  text: string
+): { latitude: number; longitude: number } | null => {
+  const regex =
+    /(\d+)\s*°\s*(\d+)\s*'\s*(\d+(\.\d+)?)\s*"\s*[EN],\s*(\d+)\s*°\s*(\d+)\s*'\s*(\d+(\.\d+)?)\s*"\s*[EN]/;
+  const match = text.match(regex);
+  if (match) {
+    let latitude =
+      parseInt(match[1]) +
+      parseInt(match[2]) / 60 +
+      parseFloat(match[3]) / 3600;
+    let longitude =
+      parseInt(match[5]) +
+      parseInt(match[6]) / 60 +
+      parseFloat(match[7]) / 3600;
+    if (match[4].endsWith('S')) {
+      latitude = -latitude;
+    }
+    if (match[8].endsWith('W')) {
+      longitude = -longitude;
+    }
+    return { latitude, longitude };
+  } else {
+    return null;
+  }
 };
