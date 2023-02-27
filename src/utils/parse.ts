@@ -13,7 +13,7 @@ export interface OpenRiceRestaurant {
   openingHours: {
     date: string;
     time: string[];
-  }[];
+  }[] | null;
   categories: string[];
   photoUrl: string | null;
 }
@@ -55,10 +55,9 @@ export const parseOpenRiceRestaurantHTML = (
   const cry = parseInt(scoreDivs[2].text.trim());
 
   const openElement = root.querySelectorAll('.opening-hours-day');
-  if (openElement.length < 1) {
-    throw new DOMNotFoundError('cannot find opening hours');
-  }
-  const openingHours = openElement
+  let openingHours: OpenRiceRestaurant['openingHours'] = null
+  if (openElement.length > 1) {
+    openingHours = openElement
     .map((v) => ({
       date: v.querySelector('.opening-hours-date')?.text.trim(),
       time: v.querySelector('.opening-hours-time')?.text.trim(),
@@ -68,7 +67,8 @@ export const parseOpenRiceRestaurantHTML = (
       date: v.date!,
       time: v.time!.split(/[\t\n]/).filter((v) => v),
     }));
-
+  }
+    
   const categories = root
     .querySelectorAll('.header-poi-categories a')
     .map((v) => v.text);

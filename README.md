@@ -20,7 +20,7 @@ This package helps parse openrice html page to json format. It is intented to pa
 - openingHours: {
 date: `string`
 time: `string[]`
-} []
+} [] | `null`
 - categories: `string[]`
 - photoUrl: `string` | `null`
 
